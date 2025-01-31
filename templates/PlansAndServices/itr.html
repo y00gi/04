@@ -1,0 +1,98 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}ITR Filing Plans | Fintrix Consulting{% endblock title %}
+{% block content %}
+
+<h4 class="mb-4 text-center"><strong>Choose Your Plan</strong></h4>
+
+<div class="row justify-content-center g-4 px-2">
+    {% for plan in plans %}
+    <div class="col-lg-3 col-md-5 col-sm-8">
+        <div class="card pricing-card border-dark position-relative shadow-sm hover-card">
+            {% if plan.discount_percentage %}
+            <div class="badge bg-danger text-white position-absolute top-0 end-0 m-2 px-2 py-1">
+                {{ plan.discount_percentage|floatformat:0 }}% off
+            </div>
+            {% endif %}
+            <div class="pricing-header bg-dark text-white py-2 text-center">
+                <h5 class="mb-0">{{ plan.plan_name }}</h5>
+            </div>
+            <div class="card-body text-center">
+                <h4 class="fw-bold">
+                    ₹<span id="total-cost">{{ plan.total_cost }}</span>
+                    <span class="fs-6 text-muted">/yr</span>
+                </h4>
+                {% if plan.discount_percentage %}
+                <p class="text-muted"><del>₹{{ plan.prices|floatformat:0 }}</del></p>
+                {% endif %}
+                <ul class="list-unstyled text-start">
+                    {% for field in plan.fields.all %}
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> {{ field.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-success add-to-cart" data-id="{{ plan.id }}" data-type="plan">
+                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                </button>
+                
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="col-lg-3 col-md-5 col-sm-8">
+        <div class="card pricing-card border-dark position-relative shadow-sm hover-card">
+            
+            <div class="pricing-header bg-dark text-white py-2 text-center">
+                <h5 class="mb-0">Customized Plan</h5>
+            </div>
+            <div class="card-body text-center">
+                <ul class="list-unstyled text-start">
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Incomes not Covered in any of previous plans
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Individuals/ HUF/ Partnership Firm/ Corporates/ Non Residents
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Incomes in Multimillionaire
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Futures & Option Trading
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Crypto Trading
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success"></i> Audit Cases
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="me-2"></i> Request Callback
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the element containing the total cost
+    const totalCostElement = document.getElementById("total-cost");
+
+    // Get the value of total cost as a float
+    let totalCost = parseFloat(totalCostElement.textContent.trim());
+
+    // Apply Math.floor to truncate the decimal part without rounding
+    totalCost = Math.floor(totalCost);
+
+    // Update the element with the floored value
+    totalCostElement.textContent = totalCost;
+
+   
+</script>
+
+{% endblock content %}

@@ -1,0 +1,212 @@
+body {
+    padding-top: 28px;
+  }
+  
+  .cart-icon {
+    position: relative;
+    font-size: 22px;
+  }
+  
+  .cart-icon .badge {
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    background-color: rgb(0, 183, 255);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }
+  
+  a i.fab.fa-whatsapp {
+    font-size: 1.2em;
+    color: #25D366;
+  }
+  
+  .hero {
+    background: #f6f4e9;
+    color: black;
+    text-align: center;
+    padding: 80px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+  }
+  
+  .service-card {
+    transition: transform 0.3s;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wrapper {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .box {
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+  }
+  
+  .box-content {
+    padding: 20px;
+  }
+  
+  .box-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.875rem;
+    display: none;
+  }
+  
+  .input-field:invalid + .error-message {
+    display: block;
+  }
+  
+  .checkbox-field {
+    margin-right: 10px;
+  }
+  
+  .btn-submit {
+    background-color: #41dd5b;
+    border: none;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .wrapper {
+        padding: 10px;
+    }
+    .box-title {
+        font-size: 1rem;
+    }
+  }
+  
+  
+  .pricing-card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Badge styling */
+  .badge {
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 5px;
+  }
+  
+  /* Card header */
+  .pricing-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  /* Hover-specific styles */
+  .hover-card:hover .card-footer button {
+    
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Mobile-specific styles */
+  @media (max-width: 768px) {
+    .pricing-card {
+        margin: 0 auto;
+        width: 90%;
+    }
+  
+    h4.mb-4 {
+        font-size: 1.5rem;
+    }
+  
+    .pricing-header h5 {
+        font-size: 1rem;
+    }
+  
+    .card-body h4 {
+        font-size: 1.5rem;
+    }
+  }
+
+  .go-to-cart-btn {
+    position: fixed;
+    bottom: 20px;  /* Distance from the bottom of the screen */
+    right: 20px;   /* Distance from the right edge of the screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: #ff4500;  /* Button color */
+    color: white;
+    border: none;
+    border-radius: 50px;  /* Rounded button */
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    transition: background-color 0.3s, box-shadow 0.3s;  /* Smooth hover effect */
+    width: 150px;
+}
+
+.go-to-cart-btn:hover {
+    background-color: #ff6347;  /* Hover color */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);  /* Slightly stronger shadow on hover */
+}
+
+.cart-icon {
+    margin-left: 8px;  /* Space between text and icon */
+    font-size: 20px;
+}
+
+.cart-text {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-check-input:checked {
+  background-color: #28a745; /* Green background for checked state */
+  border-color: #28a745;     /* Border color for checked state */
+}
+
+.form-check-input {
+  border-color: #007bff; /* Blue border for unchecked state */
+}

@@ -1,0 +1,36 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Order Confirmation | Fintrix Consulting{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Order Confirmation</h2>
+    <p class="text-success text-center">Thank you, {{ order.full_name }}! Your order has been placed successfully.</p>
+
+    <h4>Order Details</h4>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Email:</strong> {{ order.email }}</p>
+    <p><strong>Contact Number:</strong> {{ order.contact_number }}</p>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+
+    {% if order.itr_filing_plan %}
+        <h5>Selected Plan</h5>
+        <p>{{ order.itr_filing_plan.name }} - ₹{{ order.itr_filing_plan.total_cost }}</p>
+    {% endif %}
+
+    <h5>Selected Services</h5>
+    <ul>
+        {% for service in order.services.all %}
+            <li>{{ service.name }} - ₹{{ service.total_cost }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if order.promo_code %}
+        <p><strong>Promo Code Applied:</strong> {{ order.promo_code }} (Discounted Price: ₹{{ order.total_cost }})</p>
+    {% else %}
+        <p><strong>Total Cost:</strong> ₹{{ order.total_cost }}</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Return to Home</a>
+</div>
+{% endblock %}

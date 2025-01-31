@@ -1,0 +1,58 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}About Us | Fintrix Consulting{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">About <span class="text-primary">Fintrix Consulting</span></h1>
+    
+    <p class="lead text-center">
+        <i class="fas fa-balance-scale text-primary"></i> Your Trusted Partner for Taxation, Compliance, and Business Registration Services.
+    </p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3><i class="fas fa-users text-primary"></i> Who We Are</h3>
+            <p>
+                At <strong>Fintrix Consulting</strong>, we specialize in providing top-notch taxation and compliance services
+                to businesses and individuals. Our team of experts ensures seamless tax planning, accurate filings, and regulatory
+                compliance, helping you focus on what truly matters—growing your business.
+            </p>
+        </div>
+        <div class="col-md-6 text-center" >
+            <img src="{% static 'images/about_us.png' %}" 
+                alt="About Fintrix Consulting" 
+                class="img-fluid rounded shadow-sm" 
+                style="max-width: 45%; height: auto;">
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3><i class="fas fa-cogs text-primary"></i> What We Do</h3>
+            <p>Our comprehensive services include:</p>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-file-invoice-dollar text-success"></i> Taxation Services (Income Tax, GST, TDS, etc.)</li>
+                <li><i class="fas fa-building text-success"></i> Business & Company Registration</li>
+                <li><i class="fas fa-chart-line text-success"></i> Financial Consulting & Advisory</li>
+                <li><i class="fas fa-shield-alt text-success"></i> Compliance & Regulatory Support</li>
+                <li><i class="fas fa-calculator text-success"></i> Accounting & Bookkeeping Services</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3><i class="fas fa-bullseye text-primary"></i> Our Mission</h3>
+            <p>
+                We aim to simplify the complexities of taxation and compliance, offering tailor-made solutions to 
+                entrepreneurs, startups, and established businesses. Our commitment to transparency, accuracy, and 
+                timely service ensures that you stay compliant without the hassle.
+            </p>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-envelope"></i> Get in Touch
+        </a>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,148 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Home | Fintrix Consulting{% endblock title %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero">
+  <h1>Your Trusted Partner for Tax and Financial Services</h1>
+  <p>At Fintrix Consulting, we simplify your taxes and financial planning with expert assistance tailored to your needs.</p>
+  <a href="{% url 'contact' %}" class="btn btn-dark btn-lg mt-3">Get Started</a>
+</div>
+  
+  <!-- Services Section -->
+  <section id="services" class="container py-5">
+    <div class="text-center mb-5">
+      <h2>Our Services</h2>
+      <p class="text-muted">Explore our wide range of tax and financial services designed to save you time and money.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <a href="{% url 'itr' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-file-alt fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Income Tax Filing</h5>
+          <p class="card-text">Hassle-free ITR filing with guidance from tax professionals.</p>
+        </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="{% url 'service' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-hand-holding-usd fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Tax Savings Advisory</h5>
+          <p class="card-text">Expert tips to maximize your savings and minimize tax liabilities.</p>
+        </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="{% url 'service' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-chart-line fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">GST Filing</h5>
+          <p class="card-text">Seamless GST registration and return filing for businesses.</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    <div class="row g-4 mt-4">
+      <div class="col-md-4">
+        <a href="{% url 'service' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-user-shield fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Tax Notices Assistance</h5>
+          <p class="card-text">Professional help to resolve tax notices quickly and efficiently.</p>
+        </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="{% url 'service' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-briefcase fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Business Registration</h5>
+          <p class="card-text">Start your business journey with ease through our registration services.</p>
+        </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="{% url 'service' %}" style="text-decoration: none;">
+        <div class="card service-card h-100 text-center p-3">
+          <i class="fas fa-file-invoice-dollar fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Financial Planning</h5>
+          <p class="card-text">Plan for a secure future with our personalized financial strategies.</p>
+        </div>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Why Choose Us Section -->
+  <section id="why-choose-us" class="container py-5 text-center">
+    <h2>Why Choose Fintrix Consulting?</h2>
+    <p class="text-muted mb-5">We combine technology and expertise to deliver reliable and affordable tax solutions.</p>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 p-4">
+          <i class="fas fa-clock fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Fast & Easy Process</h5>
+          <p class="card-text">Get your taxes filed in no time with our streamlined process.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-4">
+          <i class="fas fa-user-tie fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Expert Assistance</h5>
+          <p class="card-text">Our qualified professionals guide you every step of the way.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-4">
+          <i class="fas fa-tags fa-3x text-dark mb-3"></i>
+          <h5 class="card-title">Affordable Pricing</h5>
+          <p class="card-text">High-quality services at prices that fit your budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <div class="container text-center">
+      <h2>What Our Clients Say</h2>
+      <p class="text-muted mb-5">Thousands of clients trust us with their taxes.</p>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="testimonial">
+            <i class="fas fa-quote-left fa-2x icon mb-3"></i>
+            <p>"Fintrix made tax filing stress-free and simple. Highly recommend!"</p>
+            <h6>- Rahul Sharma</h6>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial">
+            <i class="fas fa-quote-left fa-2x icon mb-3"></i>
+            <p>"Great team! They helped me resolve my GST issues with ease."</p>
+            <h6>- Neha Gupta</h6>
+          </div>
+        </div>
+       
+        <div class="col-md-4">
+          <div class="testimonial">
+            <i class="fas fa-quote-left fa-2x icon mb-3"></i>
+            <p>"Their financial advice saved me a lot of money and helped me plan better."</p>
+            <h6>- Amit Verma</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call-to-Action Section -->
+  <section id="cta" class="container py-5 text-center">
+    <h2>Ready to Get Started?</h2>
+    <p class="text-muted">Contact us today to file your taxes or consult with our experts.</p>
+    <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Contact Us</a>
+  </section>
+
+{% endblock content %}

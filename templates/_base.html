@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+    <title>{% block title %}Fintrix Consulting Pvt Ltd{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img id="logo"
+            style="border-radius: 4px;"
+            src="{% static 'images/logo.jpeg' %}" alt="Logo"
+            draggable="false" height="30" /> Fintrix Consulting</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item my-1">
+                  <a class="nav-link mx-2" href="{% url 'itr' %}"><i class="fa-solid fa-indian-rupee-sign pe-2"></i>ITR Filing</a>
+              </li>   
+              <li class="nav-item my-1">
+                  <a href="{% url 'service' %}" class="nav-link mx-2"><i class="fas fa-cogs pe-2"></i>Services</a>
+              </li>
+              <li class="nav-item my-1">
+                <form class="d-flex">
+                  <a href="{% url 'cart_detail' %}" class="cart-icon nav-link mx-2">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="badge bg-danger">{{ cart|length }}</span>
+                </a>
+              </form>
+              </li>              
+              <li class="nav-item ms-3 my-1">
+                <a href="#" class="btn btn-outline-secondary btn-rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fas fa-headset me-2"></i> Request Callback
+                </a>
+            </li>
+            
+           
+
+            <li class="nav-item ms-3 my-1">
+              <a href="https://wa.me/8800128904" class="btn btn btn-outline-success btn-rounded" ><i class="fab fa-whatsapp"></i> Chat with us</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      <button class="go-to-cart-btn" onclick="window.location.href='{% url 'cart_detail' %}'" aria-label="Go to cart">
+        <span class="cart-text">Go to Cart</span>
+        <i class="fas fa-shopping-cart cart-icon"></i>
+      </button>    
+    </nav>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div id="cartToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+              <div class="toast-body">
+                  Item added to cart successfully!
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+      </div>
+  </div>
+
+     <!-- Get a Quote / Request a Callback Modal -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Request a Callback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="quoteForm" method="POST" onsubmit="submitForm(event)">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <div class="input-group">
+                              <span class="input-group-text">+91</span>
+                              <input type="tel" class="form-control" id="ContactNumber" name="phone" placeholder="Enter phone number" required pattern="\d{10}" title="Please enter a 10-digit phone number">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter your message"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto text-success">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Your request has been submitted successfully!
+            </div>
+        </div>
+    </div>
+    
+    
+<script>
+    function submitForm(event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    const formData = new FormData(document.getElementById('quoteForm'));
+
+    fetch('{% url 'request_callback' %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value // CSRF token for POST requests
+        },
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            // Show success message with toast
+            var toast = new bootstrap.Toast($('#successToast')[0]);
+            toast.show();
+            // Reset the form fields
+            $('#quoteForm')[0].reset();
+            $('#exampleModal').modal('hide'); // Close modal after successful submission
+        } else {
+            // If no message in response, trigger error handling
+            alert('There was an issue with your request');
+        }
+    })
+    .catch(error => {
+        // Handle errors with an alert
+        alert('There was an error submitting your request');
+    });
+}
+
+</script>    
+    
+
+<section class="text-center mt-5">
+  {% block content %}
+  {% endblock content %}
+</section>
+
+  <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+      <!-- Left -->
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <!-- Left -->
+  
+      <!-- Right -->
+      <div>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+  
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+  
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              Useful links
+            </h6>
+            <p>
+              <a href="{% url 'about' %}" class="text-reset">About Us</a>
+            </p>
+            <p>
+              <a href="{% url 'contact' %}" class="text-reset">Contact Us</a>
+            </p>
+            <p>
+              <a href="{% url 'privacy' %}" class="text-reset">Privacy Policy</a>
+            </p>
+            <p>
+              <a href="{% url 'help' %}" class="text-reset">Help & Support</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <p><i class="fas fa-home me-3"></i> Temp Address, NY 10012, US</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              info@example.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            <p>
+                <a href="https://wa.me/8800128904" class="text-decoration-none">
+                <i class="fab fa-whatsapp me-3"></i> Chat with us
+                </a>
+            </p>
+          </div>
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold mb-4">
+                <i class="fa-solid fa-location-dot me-3"></i>Find Us
+            </h6>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2922.7795360095556!2d77.3392752186248!3d28.633844439066777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce52cde445497%3A0x8ac71384f6cced7a!2sGaur%20Biz%20Park!5e1!3m2!1sen!2sin!4v1737968645382!5m2!1sen!2sin" width="250" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2025 Copyright:
+      <a class="text-reset fw-bold" href="/">Yogendra Rajput</a>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="{% static 'js/base.js' %}"></script>
+  </body>
+</html>

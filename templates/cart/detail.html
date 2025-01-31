@@ -1,0 +1,244 @@
+
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Cart Details | Fintrix Consulting{% endblock title %}
+
+{% block content %}
+
+<!-- Bootstrap Toasts -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <!-- Success Toast -->
+    <div id="promoSuccessToast" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">Promo code applied successfully!</div>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="promoErrorToast" class="toast bg-danger text-white" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">Invalid promo code. Please try again.</div>
+    </div>
+</div>
+
+<form method="POST" action="{% url 'cart_checkout' %}">
+    {% csrf_token %}
+    <div class="row mx-2">
+        <h4 class="mb-4 mt-1 text-center">Shopping Cart</h4>
+        {% if cart|length == 0 %}
+            <p class="alert alert-warning">
+                Your cart is empty. <a href="{% url 'service' %}"><strong>Browse our services</strong></a> to add items in your cart!
+            </p>
+        {% else %}
+            <div class="col-md-5"> <!-- Card aligned to the left -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="mb-2 row">
+                            <label for="FullName" class="col-sm-3 col-form-label">Full Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="FullName" name="full_name" required>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="FirmName" class="col-sm-3 col-form-label">Firm Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="FirmName" name="firm_name">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="GSTNumber" class="col-sm-3 col-form-label">GST Number</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="GSTNumber" name="gst_number" placeholder="Eligible for GST Credit">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="ContactNumber" class="col-sm-4 col-form-label">Contact Number</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-text">+91</span>
+                                    <input type="tel" class="form-control" id="ContactNumber" name="contact_number" placeholder="Enter phone number" required pattern="\d{10}" title="Please enter a 10-digit phone number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="Email" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="Email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="Address" class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="Address" name="address">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Cart Items</h5>
+            
+                        <!-- Desktop Table -->
+                        <div class="d-none d-md-block">
+                            <table class="table table-bordered text-center">
+                                <thead class="fw-bold">
+                                    <tr>
+                                        <th>Service Name</th>
+                                        <th>Price</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart %}
+                                    <tr>
+                                        <td class="text-start">
+                                            <strong>{{ item.item.name }}{% if item.item_type == "plan" %}{{ item.item }}{% else %}{{ item.item.name }}{% endif %}</strong>
+                                        </td>
+                                        <td>₹{{ item.price }}</td>
+                                        <td>
+                                            <a href="{% url 'cart_remove' item.item.id item.item_type %}" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <!-- Mobile View -->
+                        <ul class="list-group d-md-none">
+                            {% for item in cart %}
+                            <li class="list-group-item">
+                                <strong>{{ item.item.name }}{% if item.item_type == "plan" %}{{ item.item }}{% else %}{{ item.item.name }}{% endif %}</strong>
+                                <div><strong>Price:</strong> ₹{{ item.price }}</div>
+                                <div class="text-end">
+                                    <a href="{% url 'cart_remove' item.item.id item.item_type %}" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="mb-2 row" id="promoCodeField" style="display:none;">
+                            <div class="input-group">
+                                <label for="PromoCode" class="input-group-text">Promo Code</label>
+                                <input type="text" class="form-control" id="PromoCode" placeholder="Enter your promo code" name="promo_code">
+                                <button class="btn btn-outline-danger">Apply</button>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-4 text-center">  <!-- Center the checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="applyPromoCode">
+                                    <label class="form-check-label" for="applyPromoCode">
+                                        Apply Promo Code
+                                    </label>
+                                </div>
+                            </div>
+                        </div>                        
+        
+                    <!-- Subtotal -->
+                    <div class="mt-3 text-end">
+                        <strong>Subtotal: ₹<span id="subtotal">{{ cart.get_sub_total_price }}</span></strong>
+                    </div>
+                    <!-- Discount -->
+                    <div class="mt-3 text-end text-success" id="discountSection" style="display: none;">
+                        <strong>Discount Applied: ₹<span id="discountAmount">0</span></strong>
+                    </div>
+                    <!-- Total -->
+                    <div class="mt-3 text-end">
+                        <strong>Total: ₹<span id="totalAmount">{{ cart.get_sub_total_price }}</span></strong>
+                    </div>
+                    <input type="hidden" name="total_cost" id="hiddenTotalCost" value="{{ cart.get_sub_total_price }}">
+                </div>
+                </div>
+            </div>
+            <div class="mt-1 mb-5 text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="fas fa-credit-card"></i> Checkout
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+    let originalTotal = parseFloat("{{ cart.get_sub_total_price|floatformat:2 }}");
+
+    $("#applyPromoCode").change(function () {
+        if (this.checked) {
+            $("#promoCodeField").show();
+        } else {
+            $("#promoCodeField").hide();
+            $("#PromoCode").val("");  
+            updateTotalWithoutPromo();
+        }
+    });
+
+    $("#PromoCode").on("change", function () {
+        let promoCode = $(this).val().trim();
+        let subtotal = originalTotal;
+
+        if (promoCode === "") {
+            return;
+        }
+
+        $.ajax({
+            url: "{% url 'validate_promo_code' %}",
+            type: "GET",
+            data: { promo_code: promoCode, subtotal: subtotal },
+            success: function (response) {
+                if (response.valid) {
+                    $("#promoSuccessToast .toast-body").text(`Promo code applied! Discount: ₹${response.discount}`);
+                    updateTotal(response.discount, response.new_total);
+                    showToast("#promoSuccessToast");
+                } else {
+                    $("#PromoCode").val("");  
+                    showToast("#promoErrorToast");
+                }
+            },
+            error: function () {
+                showToast("#promoErrorToast");
+            }
+        });
+    });
+
+    function updateTotal(discount, newTotal) {
+        $("#discountAmount").text(discount);
+        $("#totalAmount").text(newTotal);
+        $("#hiddenTotalCost").val(newTotal);  // ✅ Update hidden field with correct total
+        $("#discountSection").show();
+    }
+
+    function updateTotalWithoutPromo() {
+        $("#totalAmount").text(originalTotal);
+        $("#hiddenTotalCost").val(originalTotal);  // ✅ Ensure hidden field gets updated
+        $("#discountAmount").text("0");
+        $("#discountSection").hide();
+    }
+
+    function showToast(toastId) {
+        let toast = new bootstrap.Toast($(toastId)[0]);
+        toast.show();
+    }
+
+    // ✅ Ensure hiddenTotalCost is updated before submitting
+    $("form").submit(function () {
+        let finalTotal = $("#totalAmount").text();
+        $("#hiddenTotalCost").val(finalTotal);
+    });
+});
+
+</script>
+
+{% endblock %}
