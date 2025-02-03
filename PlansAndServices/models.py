@@ -146,9 +146,8 @@ class Order(models.Model):
     services = models.ManyToManyField('Service', related_name='orders')
 
      # Payment and Order status
-    order_status = models.CharField(max_length=50, default='Pending', choices=[
-        ('Pending', 'Pending'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled')
-    ])
+    payment_status = models.CharField(max_length=20, choices=[("Pending", "Pending"), ("Paid", "Paid"), ("Failed", "Failed")], default="Pending")
+    transaction_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, editable=False, default=0)
 
     # Timestamp for order creation

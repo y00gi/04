@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from PlansAndServices.models import ITRFilingPlan, Service, PromoCode, Order
 from .cart import Cart
-from django.views.generic import TemplateView
 from django.http import JsonResponse
 from django.contrib import messages
 from decimal import Decimal
@@ -69,7 +68,7 @@ def validate_promo_code(request):
         "discount": round(discount_amount, 2),
         "new_total": round(new_total, 2),
     })
-    
+
 def cart_checkout(request):
     cart = Cart(request)
 
@@ -123,10 +122,12 @@ def cart_checkout(request):
         # ✅ Clear cart after successful checkout
         cart.clear()
 
+        #Request payment to transfer the amount
+
         messages.success(request, "Your order has been placed successfully!")
         return redirect("order_confirmation", order_id=order.id)
 
-    return render(request, "cart/detail.html")
+    return render(request, "payment/payment_error.html")
 
 def order_confirmation(request, order_id):
     order = get_object_or_404(Order, id=order_id)

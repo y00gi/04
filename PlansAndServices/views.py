@@ -77,4 +77,4 @@ def request_callback(request):
         # Return a success response
         return JsonResponse({'message': 'Request submitted successfully'}, status=200)
     
-    return render(request, 'your_template.html')
+    return render(request, 'home.html')

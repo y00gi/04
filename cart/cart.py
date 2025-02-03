@@ -37,15 +37,18 @@ class Cart:
 
         self.save()
 
-    def remove(self, item_id, item_type="service"):
-        """Remove an item from the cart safely."""
-        item_id = str(item_id)
-        
-        if item_type == "plan" and item_id in self.cart["plans"]:
-            del self.cart["plans"][item_id]
-        elif item_type == "service" and item_id in self.cart["services"]:
-            del self.cart["services"][item_id]
-        
+    def remove(self, item, item_type="service"):
+        """Remove an item from the cart."""
+        item_id = str(item.id)
+
+        if item_type == "plan":
+            if item_id in self.cart['plans']:
+                del self.cart['plans'][item_id]
+
+        elif item_type == "service":
+            if item_id in self.cart['services']:
+                del self.cart['services'][item_id]
+
         self.save()
 
     def __iter__(self):
